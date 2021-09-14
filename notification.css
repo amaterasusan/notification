@@ -1,0 +1,222 @@
+/* Notification */
+
+.notification-container {
+  font-size: 14px;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 1000;
+}
+
+.notification {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 6px;
+  opacity: 0.9;
+  border-radius: 4px;
+  box-shadow: 0 0 30px 0 rgba(36, 30, 30, 0.2);
+  min-height: 56px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: all .5s linear;
+}
+
+.notification:hover {
+  box-shadow: 0 0 30px #000000;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.position-bottom-right {
+  bottom: 10px;
+  right: 10px;
+}
+
+.notification-error {
+  background: #bd362f;
+  color: #fff;
+  border-left: 4px solid rgb(241, 234, 234);
+}
+
+.notification-success {
+  background: #51a351;
+  color: #fff;
+  border-left: 4px solid rgb(241, 234, 234);
+}
+
+.notification-warning {
+  background: #f87400;
+  color: #fff;
+  border-left: 4px solid rgb(241, 234, 234);
+}
+
+.notification-info {
+  background: #2f96b4;
+  color: #fff;
+  border-left: 4px solid rgb(241, 234, 234);
+}
+
+.position-top-right {
+  top: 10px;
+  right: 10px;
+}
+
+.notification-close {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  display: block;
+  height: 24px;
+  width: 24px;
+  transition: color .1s;
+  cursor: pointer;
+}
+
+.notification-close svg {
+  display: block;
+}
+
+.notification-close .close-x {
+  /*stroke: rgb(252, 7, 7);*/
+  stroke: #fff;
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+.notification-body {
+  align-items: center;
+  display: flex;
+  min-height: 56px;
+  width: 270px;
+  padding: 10px;
+  letter-spacing: 1px;
+}
+
+.notification-icon {
+  font-size: 36px;
+  line-height: 36px;
+  width: 36px;
+  color: #fff;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-warning .notification-icon::before {
+  content: "\0021";
+}
+
+.notification-error .notification-icon::before {
+  content: "\26A0";
+}
+
+.notification-success .notification-icon::before {
+  content: "\2714";
+}
+
+.notification-info .notification-icon::before {
+  content: "\24D8";
+}
+
+.notification-body>div {
+  padding: 4px;
+  height: 100%;
+}
+
+.notification-title {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 4px;
+  margin-top: -2px;
+}
+
+.notification-desc {
+  padding: 4px;
+  color: rgba(255, 255, 255, 0.9)
+}
+
+.position-bottom-right .notification.animation-slide-in,
+.position-top-right .notification.animation-slide-in {
+  animation: position-right-slide-in .5s forwards, bounceIn  .7s forwards;
+  transform: translateX(100%);
+}
+
+.position-bottom-right .notification.animation-slide-out,
+.position-top-right .notification.animation-slide-out {
+  animation: position-right-slide-out .2s forwards;
+  margin-right: -20px;
+  transform: translateX(0);
+}
+
+.notification.animation-fade-in {
+  animation: fade-in .5s forwards;
+  opacity: 0;
+}
+
+.notification.animation-fade-out {
+  animation: fade-out .5s forwards;
+}
+
+.notification-buttons {
+  border-top: 2px solid rgba(0, 0, 0, .1);
+  display: none;
+}
+
+.notification-button {
+  background: rgba(0, 0, 0, .02);
+  align-items: center;
+  color: #000;
+  display: flex;
+  flex-grow: 1;
+  font-size: 14px;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 39px;
+  min-width: 50%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.notification-button:hover {
+  background: rgba(0, 0, 0, .01);
+  color: #000;
+  text-decoration: none;
+}
+
+.notification-cancel {
+  color: darkred;
+  border-left: 1px solid rgba(0, 0, 0, .1);
+}
+
+.notification-action {
+  color: darksalmon
+}
+
+@keyframes position-right-slide-in {
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes position-right-slide-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes bounceIn {
+  50% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  75% {
+    transform: scale(1.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
