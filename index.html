@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./demo.css" rel="stylesheet" type="text/css">
+  <link href="./notification.css" rel="stylesheet" type="text/css">
+  <title>Document</title>
+</head>
+
+<body>
+  <form>
+    <h1>Notifications</h1>
+    <div class="group">
+      <input type="text" id="title" placeholder="Enter a title" value="Success">
+      <span class="bar"></span>
+      <label>Title</label>
+    </div>
+    <div class="group">
+      <input type="text" id="message" placeholder="Enter a message" value="Default message">
+      <span class="bar"></span>
+      <label>Message</label>
+    </div>
+    <div class="group">
+      <input type="number" id="duration" value="3000">
+      <span class="bar"></span>
+      <label>Duration (ms)</label>
+    </div>
+    <div class="group">
+      <select id="position">
+        <option value="position-top-right">Top Right</option>
+        <option value="position-bottom-right">Bottom Right</option>
+        <!--<option value="nfc-top-left">Top Left</option>
+        <option value="nfc-bottom-left">Bottom Left</option>-->
+      </select>
+      <span class="bar"></span>
+      <label>Position</label>
+    </div>
+    <div class="group">
+      <select id="type">
+        <option value="notification-success">Success</option>
+        <option value="notification-info">Information</option>
+        <option value="notification-warning">Warning</option>
+        <option value="notification-error">Error</option>
+      </select>
+      <span class="bar"></span>
+      <label>Theme</label>
+    </div>
+    <div class="btn-box">
+      <button class="btn btn-submit" type="submit">Show notification</button>
+    </div>
+  </form>
+
+  <script src="./notification.js" type="text/javascript"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Form elements
+        let title = form.querySelector('#title').value;
+        let message = form.querySelector('#message').value;
+        let position = form.querySelector('#position').value;
+        let duration = form.querySelector('#duration').value;
+        let type = form.querySelector('#type').value;
+
+        if (!message) {
+          message = 'You did not enter a message...';
+        }
+
+        notification = Notification({
+          position: position,
+          duration: duration,
+          type: type
+        })({
+          title: title,
+          message: message
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
