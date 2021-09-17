@@ -165,7 +165,6 @@ function Notification(opts) {
       animationOutClass
     );
 
-    // after end of animation - remove element from container
     setTimeout(function() {
       if (elPopup.parentNode == container) {
         container.removeChild(elPopup);
