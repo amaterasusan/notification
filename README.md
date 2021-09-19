@@ -27,11 +27,13 @@ const popup = Notification({
 ```  
 
 ### notification type 
+```
   info
   success
   warning
   error
   dialog 
+```
 
 ### Info notification 
 ```
