@@ -2,7 +2,7 @@
 
 .notification-container {
   position: fixed;
-  font-family: "Lato", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1.1em;
   box-sizing: border-box;
   z-index: 1000;
@@ -36,6 +36,11 @@
   bottom: 10px;
 }
 
+.notification-container.top-right .notification,
+.notification-container.bottom-right .notification {
+  margin-left: auto;
+}
+
 .notification {
   position: relative;
   overflow: hidden;
@@ -51,6 +56,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  z-index: 100;
 }
 
 .notification:hover {
@@ -59,10 +65,27 @@
   cursor: pointer;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  background: rgba(0, 0, 0, .5);
+  z-index: 10;
+  display: none;
+}
+
+.notification:not(.notification-default) {
+  width: 310px
+}
+
 .notification-default {
   background: rgba(255, 255, 255, 0.99);
   color: rgba(0, 0, 0, 0.8);
   border-left: 4px solid rgb(194, 191, 191);
+  width: 350px;
 }
 
 .notification-error {
@@ -263,11 +286,14 @@
 
 .notification-action:before {
   content: "\2714";
+}
+
+.notification-action {
   color: green;
 }
 
 .notification-action:hover {
-  color: #1983da;
+  color: rgb(4, 173, 4);
 }
 
 @keyframes left-slide-in {

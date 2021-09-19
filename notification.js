@@ -1,7 +1,7 @@
 function Notification(opts) {
   const defaultOpts = {
-    position: 'bottom-right',
-    duration: 3000
+    position: 'top-right',
+    duration: 4000
   };
   opts = Object.assign({}, defaultOpts, opts);
   opts.duration = parseInt(opts.duration);
@@ -19,6 +19,7 @@ function Notification(opts) {
   const closeSelector = '.notification-close';
   const actionButSelector = '.notification-action';
   const cancelButSelector = '.notification-cancel';
+  const overlaySelector = '.overlay';
 
   // class, defaultTitle and defaultMessage
   const dataByType = {
@@ -42,13 +43,16 @@ function Notification(opts) {
       'defaultTitle': 'Warning',
       'defaultMessage': 'default Warning'
     },
-
     'error': {
       'classType': 'notification-error',
       'defaultTitle': 'Error',
       'defaultMessage': 'An error has occurred'
     }
   };
+
+  const setPosition = (newPosition) => {
+    opts.position = newPosition;
+  }
 
   const tempatePopup = () => {
     return `
@@ -106,6 +110,7 @@ function Notification(opts) {
     // add buttons if confirm dialog
     if (type == 'dialog') {
       elPopup.insertAdjacentHTML('beforeend', dialogButtons());
+      document.querySelector(overlaySelector).style.display = 'block';
     }
 
     // add element to container in the required sequence
@@ -168,6 +173,10 @@ function Notification(opts) {
     setTimeout(function() {
       if (elPopup.parentNode == container) {
         container.removeChild(elPopup);
+
+        if (opts.type == 'dialog') {
+          document.querySelector(overlaySelector).style.display = 'none';
+        }
       }
 
       // Remove container if it empty
@@ -178,6 +187,7 @@ function Notification(opts) {
   }
 
   const showPopup = ({ type, title, message, callback = null } = {}) => {
+    opts.type = type;
     const elPopup = createPopup(type);
 
     // set title and message to created element
@@ -213,5 +223,5 @@ function Notification(opts) {
   const success = ({ title, message }) => showPopup({ type: 'success', title, message });
   const warning = ({ title, message }) => showPopup({ type: 'warning', title, message });
   const error = ({ title, message }) => showPopup({ type: 'error', title, message });
-  return { dialog, info, success, warning, error };
+  return { dialog, info, success, warning, error, setPosition };
 }
