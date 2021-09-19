@@ -9,7 +9,8 @@ Download files, then:
 
 ## Usage
 ### options
-position <string> - can have such values : 
+```
+position <string> - can have such values :
   top-right //default value
   bottom-right
   top-left
@@ -17,7 +18,7 @@ position <string> - can have such values :
   center
 duration <integer> time in milliseconds the notification will be displayed
   default 4000
-
+```
 ```
 const popup = Notification({
   position: 'top-left',
