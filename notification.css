@@ -7,7 +7,7 @@
   box-sizing: border-box;
   z-index: 1000;
   overflow: hidden;
-  transition: all .5s linear;
+  transition: all 0.5s linear;
 }
 
 .notification-container.center {
@@ -46,7 +46,7 @@
   overflow: hidden;
   max-height: 500px;
   transition-property: all;
-  transition-duration: .5s;
+  transition-duration: 0.5s;
   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
   margin: 0 0 6px;
   opacity: 0.9;
@@ -72,13 +72,13 @@
   height: 100%;
   width: 100%;
   background-color: #000;
-  background: rgba(0, 0, 0, .5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 10;
   display: none;
 }
 
 .notification:not(.notification-default) {
-  width: 310px
+  width: 310px;
 }
 
 .notification-default {
@@ -119,7 +119,7 @@
   display: block;
   height: 24px;
   width: 24px;
-  transition: color .1s;
+  transition: color 0.1s;
   cursor: pointer;
 }
 
@@ -166,26 +166,26 @@
 }
 
 .notification-default .notification-icon::before {
-  content: "\1F514";
+  content: '\1F514';
 }
 
 .notification-warning .notification-icon::before {
-  content: "\0021";
+  content: '\0021';
 }
 
 .notification-error .notification-icon::before {
-  content: "\26A0";
+  content: '\26A0';
 }
 
 .notification-success .notification-icon::before {
-  content: "\2714";
+  content: '\2714';
 }
 
 .notification-info .notification-icon::before {
-  content: "\24D8";
+  content: '\24D8';
 }
 
-.notification-body>div {
+.notification-body > div {
   padding: 4px;
   height: 100%;
 }
@@ -213,33 +213,33 @@
 
 .bottom-right .notification.animation-slide-in,
 .top-right .notification.animation-slide-in {
-  animation: right-slide-in .5s forwards, bounceIn .7s forwards;
+  animation: right-slide-in 0.5s forwards, bounceIn 0.7s forwards;
   transform: translateX(100%);
 }
 
 .bottom-right .notification.animation-slide-out,
 .top-right .notification.animation-slide-out {
-  animation: right-slide-out .5s forwards;
+  animation: right-slide-out 0.5s forwards;
 }
 
 .top-left .notification.animation-slide-in,
 .bottom-left .notification.animation-slide-in {
-  animation: left-slide-in .5s forwards, bounceIn .7s forwards;
+  animation: left-slide-in 0.5s forwards, bounceIn 0.7s forwards;
   transform: translateX(-100%);
 }
 
 .top-left .notification.animation-slide-out,
 .bottom-left .notification.animation-slide-out {
-  animation: left-slide-out .5s forwards;
+  animation: left-slide-out 0.5s forwards;
 }
 
 .notification.animation-fade-in {
-  animation: fade-in .5s forwards, bounceIn .7s forwards;
+  animation: fade-in 0.5s forwards, bounceIn 0.7s forwards;
   opacity: 0;
 }
 
 .notification.animation-fade-out {
-  animation: fade-out .5s forwards;
+  animation: fade-out 0.5s forwards;
 }
 
 .notification-buttons {
@@ -272,7 +272,7 @@
 }
 
 .notification-cancel:before {
-  content: "\2717";
+  content: '\2717';
 }
 
 .notification-cancel {
@@ -285,7 +285,7 @@
 }
 
 .notification-action:before {
-  content: "\2714";
+  content: '\2714';
 }
 
 .notification-action {
@@ -355,7 +355,6 @@
 
 @keyframes fade-out {
   to {
-    opacity: 0;
     margin-top: 0;
     margin-bottom: 0;
     padding-top: 0;

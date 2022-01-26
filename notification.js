@@ -1,59 +1,59 @@
 function Notification(opts) {
   const defaultOpts = {
     position: 'top-right',
-    duration: 4000
-  }
-  opts = Object.assign({}, defaultOpts, opts)
-  opts.duration = parseInt(opts.duration)
+    duration: 4000,
+  };
+  opts = Object.assign({}, defaultOpts, opts);
+  opts.duration = parseInt(opts.duration);
 
-  const timeouts = []
+  const timeouts = [];
 
   // selectors
-  const classMainSelector = 'notification-container'
-  const classPopup = 'notification'
-  const animationInClass = 'animation-slide-in'
-  const animationOutClass = 'animation-slide-out'
-  const animationFadeInClass = 'animation-fade-in'
-  const animationFadeOutClass = 'animation-fade-out'
-  const titleSelector = '.notification-title'
-  const descSelector = '.notification-desc'
-  const closeSelector = '.notification-close'
-  const actionButSelector = '.notification-action'
-  const cancelButSelector = '.notification-cancel'
-  const overlaySelector = '.overlay'
+  const classMainSelector = 'notification-container';
+  const classPopup = 'notification';
+  const animationInClass = 'animation-slide-in';
+  const animationOutClass = 'animation-slide-out';
+  const animationFadeInClass = 'animation-fade-in';
+  const animationFadeOutClass = 'animation-fade-out';
+  const titleSelector = '.notification-title';
+  const descSelector = '.notification-desc';
+  const closeSelector = '.notification-close';
+  const actionButSelector = '.notification-action';
+  const cancelButSelector = '.notification-cancel';
+  const overlaySelector = '.overlay';
 
   // class, defaultTitle and defaultMessage
   const dataByType = {
     dialog: {
       classType: 'notification-default',
       defaultTitle: 'Confirm',
-      defaultMessage: 'Are you sure you want to do this?'
+      defaultMessage: 'Are you sure you want to do this?',
     },
     info: {
       classType: 'notification-info',
       defaultTitle: 'Info',
-      defaultMessage: 'default Info'
+      defaultMessage: 'default Info',
     },
     success: {
       classType: 'notification-success',
       defaultTitle: 'Success',
-      defaultMessage: 'default Success'
+      defaultMessage: 'default Success',
     },
     warning: {
       classType: 'notification-warning',
       defaultTitle: 'Warning',
-      defaultMessage: 'default Warning'
+      defaultMessage: 'default Warning',
     },
     error: {
       classType: 'notification-error',
       defaultTitle: 'Error',
-      defaultMessage: 'An error has occurred'
-    }
-  }
+      defaultMessage: 'An error has occurred',
+    },
+  };
 
   const setPosition = (newPosition) => {
-    opts.position = newPosition
-  }
+    opts.position = newPosition;
+  };
 
   const tempatePopup = () => {
     return `
@@ -68,160 +68,173 @@ function Notification(opts) {
         <div class="notification-title"></div>
         <div class="notification-desc"></div>
       </div>
-    </div>`
-  }
+    </div>`;
+  };
 
   const dialogButtons = () => {
     return `<div class="notification-buttons">
     <span class="notification-button notification-cancel"></span>
     <span class="notification-button notification-action"></span>
-    </div>`
-  }
+    </div>`;
+  };
 
   const createMainContainer = (position) => {
-    let container = document.querySelector(`.${classMainSelector}.${position}`)
+    let container = document.querySelector(`.${classMainSelector}.${position}`);
 
     if (!container) {
-      container = document.createElement('div')
-      container.classList = classMainSelector + ' ' + position
-      document.body.appendChild(container)
+      container = document.createElement('div');
+      container.classList = classMainSelector + ' ' + position;
+      document.body.appendChild(container);
     }
 
-    return container
-  }
+    return container;
+  };
 
   const createPopup = (type) => {
-    const container = createMainContainer(opts.position)
+    const container = createMainContainer(opts.position);
 
-    const elPopup = document.createElement('div')
+    const elPopup = document.createElement('div');
 
     // add classes
-    elPopup.classList.add(classPopup)
+    elPopup.classList.add(classPopup);
     elPopup.classList.add(
-      opts.position === 'center' ?
-      animationFadeInClass :
-      animationInClass
-    )
-    elPopup.classList.add(dataByType[type].classType)
+      opts.position === 'center' ? animationFadeInClass : animationInClass
+    );
+    elPopup.classList.add(dataByType[type].classType);
 
     // insert template in element
-    elPopup.insertAdjacentHTML('beforeend', tempatePopup())
+    elPopup.insertAdjacentHTML('beforeend', tempatePopup());
 
     // add buttons if confirm dialog
     if (type === 'dialog') {
-      elPopup.insertAdjacentHTML('beforeend', dialogButtons())
-      document.querySelector(overlaySelector).style.display = 'block'
+      elPopup.insertAdjacentHTML('beforeend', dialogButtons());
+      document.querySelector(overlaySelector).style.display = 'block';
     }
 
     // add element to container in the required sequence
     if (opts.position.includes('bottom')) {
-      container.prepend(elPopup)
+      container.prepend(elPopup);
     } else {
-      container.appendChild(elPopup)
+      container.appendChild(elPopup);
     }
 
-    return elPopup
-  }
+    return elPopup;
+  };
 
   const setButtonsEvent = (elPopup, callback = null) => {
-    const elAction = elPopup.querySelector(actionButSelector)
-    elAction.addEventListener('click', function handlerAction(event) {
-      event.stopPropagation()
-      event.preventDefault()
-      hidePopUp(elPopup)
+    const elAction = elPopup.querySelector(actionButSelector);
+    elAction.addEventListener(
+      'click',
+      function handlerAction(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        hidePopUp(elPopup);
 
-      elAction.removeEventListener('click', handlerAction, false)
-      if (callback) {
-        return callback('ok')
-      }
-      return false
-    }, false)
+        elAction.removeEventListener('click', handlerAction, false);
+        if (callback) {
+          return callback('ok');
+        }
+        return false;
+      },
+      false
+    );
 
-    const elCancel = elPopup.querySelector(cancelButSelector)
-    elCancel.addEventListener('click', function handlerCancel(event) {
-      event.stopPropagation()
-      event.preventDefault()
-      hidePopUp(elPopup)
+    const elCancel = elPopup.querySelector(cancelButSelector);
+    elCancel.addEventListener(
+      'click',
+      function handlerCancel(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        hidePopUp(elPopup);
 
-      elCancel.removeEventListener('click', handlerCancel, false)
-      if (callback) {
-        return callback('cancel')
-      }
-      return false
-    }, false)
-  }
+        elCancel.removeEventListener('click', handlerCancel, false);
+        if (callback) {
+          return callback('cancel');
+        }
+        return false;
+      },
+      false
+    );
+  };
 
   const hidePopUp = (elPopup) => {
-    const container = document.querySelector(`.${classMainSelector}.${opts.position}`)
+    const container = document.querySelector(
+      `.${classMainSelector}.${opts.position}`
+    );
 
-    const firstTimeout = timeouts.shift()
-    clearTimeout(firstTimeout)
+    const firstTimeout = timeouts.shift();
+    clearTimeout(firstTimeout);
 
     // change animation class
     elPopup.classList.remove(
-      opts.position === 'center' ?
-      animationFadeInClass :
-      animationInClass
-    )
+      opts.position === 'center' ? animationFadeInClass : animationInClass
+    );
 
     elPopup.classList.add(
-      opts.position === 'center' ?
-      animationFadeOutClass :
-      animationOutClass
-    )
+      opts.position === 'center' ? animationFadeOutClass : animationOutClass
+    );
 
-    setTimeout(function() {
+    setTimeout(function () {
       if (elPopup.parentNode == container) {
-        container.removeChild(elPopup)
+        container.removeChild(elPopup);
 
         if (opts.type === 'dialog') {
-          document.querySelector(overlaySelector).style.display = 'none'
+          document.querySelector(overlaySelector).style.display = 'none';
         }
       }
 
       // Remove container if it empty
       if (!container.hasChildNodes()) {
-        document.body.removeChild(container)
+        document.body.removeChild(container);
       }
-    }, 500)
-  }
+    }, 500);
+  };
 
   const showPopup = ({ type, title, message, callback = null } = {}) => {
-    opts.type = type
-    const elPopup = createPopup(type)
+    opts.type = type;
+    const elPopup = createPopup(type);
 
     // set title and message to created element
-    const elTitle = elPopup.querySelector(titleSelector)
-    const elText = elPopup.querySelector(descSelector)
+    const elTitle = elPopup.querySelector(titleSelector);
+    const elText = elPopup.querySelector(descSelector);
 
-    const titlePopup = title || dataByType[type].defaultTitle
-    const messagePopup = message || dataByType[type].defaultMessage
+    const titlePopup = title || dataByType[type].defaultTitle;
+    const messagePopup = message || dataByType[type].defaultMessage;
 
-    elTitle.innerText = titlePopup
-    elText.innerText = messagePopup
+    elTitle.innerText = titlePopup;
+    elText.innerText = messagePopup;
 
     // click event
     if (type === 'dialog') {
       // set buttons click event
-      setButtonsEvent(elPopup, callback)
+      setButtonsEvent(elPopup, callback);
     } else {
       // push new timeout to timeouts array if type is not dialog
-      const timeout = setTimeout(() => hidePopUp(elPopup), opts.duration)
-      timeouts.push(timeout)
+      const timeout = setTimeout(() => hidePopUp(elPopup), opts.duration);
+      timeouts.push(timeout);
     }
 
     // add click event to close element
-    const elClose = elPopup.querySelector(closeSelector)
-    elClose.addEventListener('click', function handlerClose(event) {
-      hidePopUp(elPopup)
-      elClose.removeEventListener('click', handlerClose, false)
-    }, false)
-  }
+    const elClose = elPopup.querySelector(closeSelector);
+    elClose.addEventListener(
+      'click',
+      function handlerClose(event) {
+        hidePopUp(elPopup);
+        elClose.removeEventListener('click', handlerClose, false);
+      },
+      false
+    );
+  };
 
-  const dialog = ({ title, message, callback = null }) => showPopup({ type: 'dialog', title, message, callback })
-  const info = ({ title, message }) => showPopup({ type: 'info', title, message })
-  const success = ({ title, message }) => showPopup({ type: 'success', title, message })
-  const warning = ({ title, message }) => showPopup({ type: 'warning', title, message })
-  const error = ({ title, message }) => showPopup({ type: 'error', title, message })
-  return { dialog, info, success, warning, error, setPosition }
+  const dialog = ({ title, message, callback = null }) =>
+    showPopup({ type: 'dialog', title, message, callback });
+  const info = ({ title, message }) =>
+    showPopup({ type: 'info', title, message });
+  const success = ({ title, message }) =>
+    showPopup({ type: 'success', title, message });
+  const warning = ({ title, message }) =>
+    showPopup({ type: 'warning', title, message });
+  const error = ({ title, message }) =>
+    showPopup({ type: 'error', title, message });
+  return { dialog, info, success, warning, error, setPosition };
 }

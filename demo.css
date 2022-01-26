@@ -38,7 +38,6 @@ form h1 {
   font-size: 3em;
   font-weight: 300;
   text-align: center;
-  /*color: #2196f3;*/
   color: #2196f3;
   padding-top: 0;
   margin-top: 0;
@@ -103,18 +102,18 @@ select {
   outline: none;
 }
 
-.group input:focus~label,
-.group select:focus~label,
-.group input:valid~label,
-.group select:valid~label {
+.group input:focus ~ label,
+.group select:focus ~ label,
+.group input:valid ~ label,
+.group select:valid ~ label {
   top: -14px;
   font-size: 12px;
   color: #2196f3;
   /*color: #04c484;*/
 }
 
-.group input:focus~.bar:before,
-.group select:focus~.bar:before {
+.group input:focus ~ .bar:before,
+.group select:focus ~ .bar:before {
   width: 100%;
 }
 
@@ -177,7 +176,7 @@ select {
 }
 
 .ripple:after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   width: 100%;
@@ -190,11 +189,11 @@ select {
   background-position: 50%;
   transform: scale(10, 10);
   opacity: 0;
-  transition: transform .5s, opacity 1s;
+  transition: transform 0.5s, opacity 1s;
 }
 
 .ripple:active:after {
   transform: scale(0, 0);
-  opacity: .3;
+  opacity: 0.3;
   transition: 0s;
 }
