@@ -18,6 +18,8 @@ position <string> - can have such values :
   center
 duration <integer> time in milliseconds the notification will be displayed
   default 4000
+  
+if duration is 0 - popup notification will be displayed all the time  
 ```
 ```
 const popup = Notification({

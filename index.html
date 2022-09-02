@@ -43,10 +43,10 @@
       </div>
       <div class="group">
         <select id="type">
-          <option value="info">Information</option>
+          <option value="error">Error</option>
           <option value="success">Success</option>
           <option value="warning">Warning</option>
-          <option value="error">Error</option>
+          <option value="info">Information</option>
           <option value="dialog">Dialog</option>
         </select>
         <span class="bar"></span>
@@ -97,7 +97,6 @@ popup.error({
   <script src="./notification.js" type="text/javascript"></script>
   <script>
     window.addEventListener('DOMContentLoaded', function () {
-
       const form = document.querySelector('form');
 
       const titleEl = form.querySelector('#title');
@@ -107,32 +106,32 @@ popup.error({
       const typeEl = form.querySelector('#type');
 
       const defaultText = {
-        'info': {
-          'defaultTitle': 'Info',
-          'defaultMessage': 'Default Info Message'
+        info: {
+          defaultTitle: 'Info',
+          defaultMessage: 'Default Info Message',
         },
-        'success': {
-          'defaultTitle': 'Success',
-          'defaultMessage': 'Default Success Message'
+        success: {
+          defaultTitle: 'Success',
+          defaultMessage: 'Default Success Message',
         },
-        'warning': {
-          'defaultTitle': 'Warning',
-          'defaultMessage': 'Default Warning Message'
+        warning: {
+          defaultTitle: 'Warning',
+          defaultMessage: 'Default Warning Message',
         },
-        'error': {
-          'defaultTitle': 'Error',
-          'defaultMessage': 'An error has occurred'
+        error: {
+          defaultTitle: 'Error',
+          defaultMessage: 'An error has occurred',
         },
-        'dialog': {
-          'defaultTitle': 'Confirm',
-          'defaultMessage': 'Are you sure you want to do this?'
-        }
+        dialog: {
+          defaultTitle: 'Confirm',
+          defaultMessage: 'Default Confirm message',
+        },
       };
 
       typeEl.addEventListener('change', (event) => {
         titleEl.value = defaultText[typeEl.value].defaultTitle;
         messageEl.value = defaultText[typeEl.value].defaultMessage;
-      })
+      });
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -147,19 +146,19 @@ popup.error({
 
         if (type == 'dialog') {
           callback = (result) => {
-            console.log('result = ', result)
+            console.log('result = ', result);
           };
         }
 
         const popup = Notification({
           position: position,
-          duration: duration
+          duration: duration,
         });
 
         if (!popup[type]) {
           popup.error({
             title: 'Error',
-            message: `Notification has no such method "${type}"`
+            message: `Notification has no such method "${type}"`,
           });
           return;
         }
@@ -167,12 +166,9 @@ popup.error({
         popup[type]({
           title: title,
           message: message,
-          callback: callback
+          callback: callback,
         });
-        //Notification().error({message: 'An error has occured'}) 
       });
-
-
     });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>

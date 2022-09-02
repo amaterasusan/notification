@@ -4,7 +4,7 @@ function Notification(opts) {
     duration: 4000,
   };
   opts = Object.assign({}, defaultOpts, opts);
-  opts.duration = parseInt(opts.duration);
+  opts.duration = parseInt(opts.duration) || 0;
 
   const timeouts = [];
 
@@ -20,14 +20,15 @@ function Notification(opts) {
   const closeSelector = '.notification-close';
   const actionButSelector = '.notification-action';
   const cancelButSelector = '.notification-cancel';
-  const overlaySelector = '.overlay';
+  const overlayClass = 'overlay';
+  const overlaySelector = `.${overlayClass}`;
 
   // class, defaultTitle and defaultMessage
   const dataByType = {
     dialog: {
       classType: 'notification-default',
       defaultTitle: 'Confirm',
-      defaultMessage: 'Are you sure you want to do this?',
+      defaultMessage: 'Default Confirm message',
     },
     info: {
       classType: 'notification-info',
@@ -97,9 +98,7 @@ function Notification(opts) {
 
     // add classes
     elPopup.classList.add(classPopup);
-    elPopup.classList.add(
-      opts.position === 'center' ? animationFadeInClass : animationInClass
-    );
+    elPopup.classList.add(opts.position === 'center' ? animationFadeInClass : animationInClass);
     elPopup.classList.add(dataByType[type].classType);
 
     // insert template in element
@@ -108,7 +107,13 @@ function Notification(opts) {
     // add buttons if confirm dialog
     if (type === 'dialog') {
       elPopup.insertAdjacentHTML('beforeend', dialogButtons());
-      document.querySelector(overlaySelector).style.display = 'block';
+      if (!document.querySelector(overlaySelector)) {
+        const overlayEl = document.createElement('div');
+        overlayEl.classList.add(overlayClass);
+        document.body.appendChild(overlayEl);
+      }
+
+      document.querySelector(overlaySelector).classList.add('active');
     }
 
     // add element to container in the required sequence
@@ -158,28 +163,22 @@ function Notification(opts) {
   };
 
   const hidePopUp = (elPopup) => {
-    const container = document.querySelector(
-      `.${classMainSelector}.${opts.position}`
-    );
+    const container = document.querySelector(`.${classMainSelector}.${opts.position}`);
 
     const firstTimeout = timeouts.shift();
     clearTimeout(firstTimeout);
 
     // change animation class
-    elPopup.classList.remove(
-      opts.position === 'center' ? animationFadeInClass : animationInClass
-    );
+    elPopup.classList.remove(opts.position === 'center' ? animationFadeInClass : animationInClass);
 
-    elPopup.classList.add(
-      opts.position === 'center' ? animationFadeOutClass : animationOutClass
-    );
+    elPopup.classList.add(opts.position === 'center' ? animationFadeOutClass : animationOutClass);
 
     setTimeout(function () {
       if (elPopup.parentNode == container) {
         container.removeChild(elPopup);
 
         if (opts.type === 'dialog') {
-          document.querySelector(overlaySelector).style.display = 'none';
+          document.querySelector(overlaySelector).classList.remove('active');
         }
       }
 
@@ -208,7 +207,7 @@ function Notification(opts) {
     if (type === 'dialog') {
       // set buttons click event
       setButtonsEvent(elPopup, callback);
-    } else {
+    } else if (opts.duration) {
       // push new timeout to timeouts array if type is not dialog
       const timeout = setTimeout(() => hidePopUp(elPopup), opts.duration);
       timeouts.push(timeout);
@@ -228,13 +227,9 @@ function Notification(opts) {
 
   const dialog = ({ title, message, callback = null }) =>
     showPopup({ type: 'dialog', title, message, callback });
-  const info = ({ title, message }) =>
-    showPopup({ type: 'info', title, message });
-  const success = ({ title, message }) =>
-    showPopup({ type: 'success', title, message });
-  const warning = ({ title, message }) =>
-    showPopup({ type: 'warning', title, message });
-  const error = ({ title, message }) =>
-    showPopup({ type: 'error', title, message });
+  const info = ({ title, message }) => showPopup({ type: 'info', title, message });
+  const success = ({ title, message }) => showPopup({ type: 'success', title, message });
+  const warning = ({ title, message }) => showPopup({ type: 'warning', title, message });
+  const error = ({ title, message }) => showPopup({ type: 'error', title, message });
   return { dialog, info, success, warning, error, setPosition };
 }
