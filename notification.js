@@ -29,7 +29,7 @@ function Notification(options = {}) {
     }
     // check duration
     opts.duration = parseInt(opts.duration);
-    if (isNaN(opts.duration) || opts.duration < 1000) {
+    if (isNaN(opts.duration) || (opts.duration < 1000 && opts.duration !== 0)) {
       opts.duration = defDuration;
     }
     // check maxOpened

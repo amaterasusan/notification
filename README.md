@@ -1,5 +1,5 @@
 # Notification
-![Built with JavaScript](https://img.shields.io/badge/Built%20with-JavaScript-green?logo=javascript)
+![Built with JavaScript](https://img.shields.io/badge/Built%20with-JavaScript-green?logo=javascript)\
 **Popup notifications** is a lightweight Javascript library for popup messages on a web page. Pure javascript and css, any dependencies. You can use it as toast messages or a single notification.
 
 ## Live Demo
