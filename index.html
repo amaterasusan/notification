@@ -8,13 +8,24 @@
   <link href="./demo.css" rel="stylesheet" type="text/css">
   <link href="./notification.css" rel="stylesheet" type="text/css">
   <title>Notifications</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/github-dark.min.css">
 </head>
 
 <body>
   <div class="container-form">
     <form autocomplete="off">
       <h1>Notifications</h1>
+      <div class="group inline">
+        <div class="wrapper-checkbox"><input class="custom-checkbox" type="checkbox" name="hide-prev" id="hide-prev"></div>
+        <label for="hide-prev">Hide previous popup(s)</label>
+      </div>
+      <div class="group inline">
+        <div class="wrapper-checkbox"><input class="custom-checkbox" type="checkbox" id="use-html"></div>
+        <label for="use-html">Use the HTML example for the title and message</label>
+      </div>
+      <div class="group inline">
+        <div class="wrapper-checkbox"><input class="custom-checkbox" type="checkbox" name="hide-title" id="hide-title"></div>
+        <label for="hide-prev">Hide Title Block</label>
+      </div>
       <div class="group">
         <input type="text" id="title" placeholder="Enter a title" value="Error">
         <span class="bar"></span>
@@ -26,17 +37,17 @@
         <label>Message</label>
       </div>
       <div class="group">
-        <input type="number" id="duration" value="3000">
+        <input type="number" id="duration" value="10000">
         <span class="bar"></span>
         <label>Duration (ms)</label>
       </div>
       <div class="group">
         <select id="position">
-          <option value="top-right">Top Right</option>
-          <option value="bottom-right">Bottom Right</option>
-          <option value="top-left">Top Left</option>
-          <option value="bottom-left">Bottom Left</option>
-          <option value="center">Center</option>
+          <option value="top-right">top right</option>
+          <option value="bottom-right">bottom right</option>
+          <option value="top-left">top left</option>
+          <option value="bottom-left">bottom left</option>
+          <option value="center">center</option>
         </select>
         <span class="bar"></span>
         <label>Position</label>
@@ -45,138 +56,22 @@
         <select id="type">
           <option value="error">Error</option>
           <option value="success">Success</option>
+          <option value="info">Info</option>
           <option value="warning">Warning</option>
-          <option value="info">Information</option>
           <option value="dialog">Dialog</option>
         </select>
         <span class="bar"></span>
         <label>Type</label>
       </div>
+
       <div class="btn-box">
-        <button class="btn ripple" type="submit">Show notification</button>
+        <button class="btn ripple" id="show-notification" type="button">Show notification</button>
       </div>
     </form>
-    <div class="code">
-      <pre>
-            <code class="language-javascript">
-/*
-  position may be:
-    top-right //default value
-    bottom-right
-    top-left
-    bottom-left
-    center
-  default duration value: 4000(ms)
-*/
-// Example of using
-const popup = Notification({
-  position: 'top-left',
-  duration: 3500
-});
-
-popup.error({
-  title: 'Error',
-  message: 'An error has occurred'
-});
-/*
-  Available methods:
-    error
-    warning
-    success
-    info
-    dialog 
-    
-  If you use dialog - 
-    the third parameter is the callback function
-*/  
-        </code>
-      </pre>
-    </div>
   </div>
-  <div class="overlay"></div>
+
   <script src="./notification.js" type="text/javascript"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', function () {
-      const form = document.querySelector('form');
-
-      const titleEl = form.querySelector('#title');
-      const messageEl = form.querySelector('#message');
-      const positionEl = form.querySelector('#position');
-      const durationEl = form.querySelector('#duration');
-      const typeEl = form.querySelector('#type');
-
-      const defaultText = {
-        info: {
-          defaultTitle: 'Info',
-          defaultMessage: 'Default Info Message',
-        },
-        success: {
-          defaultTitle: 'Success',
-          defaultMessage: 'Default Success Message',
-        },
-        warning: {
-          defaultTitle: 'Warning',
-          defaultMessage: 'Default Warning Message',
-        },
-        error: {
-          defaultTitle: 'Error',
-          defaultMessage: 'An error has occurred',
-        },
-        dialog: {
-          defaultTitle: 'Confirm',
-          defaultMessage: 'Default Confirm message',
-        },
-      };
-
-      typeEl.addEventListener('change', (event) => {
-        titleEl.value = defaultText[typeEl.value].defaultTitle;
-        messageEl.value = defaultText[typeEl.value].defaultMessage;
-      });
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        // Form elements
-        const title = titleEl.value;
-        const message = messageEl.value;
-        const position = positionEl.value;
-        const duration = durationEl.value;
-        const type = typeEl.value;
-        let callback = null;
-
-        if (type == 'dialog') {
-          callback = (result) => {
-            console.log('result = ', result);
-          };
-        }
-
-        const popup = Notification({
-          position: position,
-          duration: duration,
-        });
-
-        if (!popup[type]) {
-          popup.error({
-            title: 'Error',
-            message: `Notification has no such method "${type}"`,
-          });
-          return;
-        }
-
-        popup[type]({
-          title: title,
-          message: message,
-          callback: callback,
-        });
-      });
-    });
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
-  <script>
-    document.querySelectorAll('pre code').forEach((el) => {
-      hljs.highlightElement(el);
-    });
-  </script>
+  <script src="./demo.js" type="text/javascript"></script>
 </body>
 
 </html>

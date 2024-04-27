@@ -5,7 +5,9 @@
  *
  * Copyright (C) 2024 Helen Nikitina
  */
-function Notification(options = {}) {
+
+import './notification.css';
+export default function Notification(options = {}) {
   let opts = {};
   let timeouts = {};
   const defNumberOpened = 5;
