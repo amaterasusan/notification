@@ -359,7 +359,7 @@ textarea.popup-textarea {
 
 @keyframes pulse-border {
   0% {
-    border-color: gba(3, 62, 94, 0.15);
+    border-color: rgba(3, 62, 94, 0.15);
     background: #f4f4f4;
   }
 
@@ -369,7 +369,7 @@ textarea.popup-textarea {
   }
 
   100% {
-    border-color: gba(3, 62, 94, 0.15);
+    border-color: rgba(3, 62, 94, 0.15);
     background: #f4f4f4;
   }
 }
