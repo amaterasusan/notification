@@ -7,18 +7,18 @@
   --popup-border-width: 1px;
   --popup-border-left-width: 6px;
   --popup-border-color: transparent;
-  --popup-box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  --popup-box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
   --popup-dividing-border: 1px solid rgba(0, 0, 0, 0.05);
   /* dialog */
   --popup-dialog-bg: rgba(255, 255, 255, 0.93);
-  --popup-dialog-border-width: 2px;
+  --popup-dialog-border-width: 1px;
   --popup-dialog-border-left-width: 8px;
   --popup-dialog-lborder-color: #0b8dad;
-  --popup-dialog-border-color: rgba(0, 0, 0, 0.2);
+  --popup-dialog-border-color: transparent;
   --popup-dialog-title-color: #222;
   --popup-dialog-desc-color: #444;
   --popup-dialog-close-x-color: #a61818;
-  --popup-dialog-box-shadow: -1px -1px 10px rgba(255, 255, 255, 0.4),
+  --popup-dialog-box-shadow: -1px -1px 20px rgba(255, 255, 255, 0.4),
     5px 5px 15px rgba(0, 0, 0, 0.8);
   /* dialog buttons */
   --popup-btns-dividing-border: none;
@@ -65,7 +65,6 @@
 
 .notification-container {
   position: fixed;
-  overflow: hidden;
   font-size: 1em;
   z-index: 1001;
   transition: all 0.4s linear;
